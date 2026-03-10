@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import GradientButton from "@/components/ui/GradientButton";
-import ShootingStars from "@/components/ui/ShootingStars";
 
 // ─── Framer Motion variants ─────────────────────────────────────────
 const stagger = {
@@ -36,38 +35,12 @@ export default function HeroSection() {
   return (
     <section
       className="
-        relative min-h-screen w-full overflow-hidden
+        relative z-10 min-h-[85vh] w-full overflow-visible
         flex flex-col items-center justify-center
-        bg-[#050505]
-        px-6 py-32 sm:py-40 lg:py-48
+        px-6 pt-32 pb-16 sm:pt-40 sm:pb-20 lg:pt-48 lg:pb-24
       "
     >
-      {/* ── 1. Radial ambient glow ────────────────────────────────── */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background: [
-            "radial-gradient(ellipse 60% 45% at 50% 38%, rgba(220,38,38,.07) 0%, transparent 70%)",
-            "radial-gradient(ellipse 45% 35% at 48% 44%, rgba(159,18,57,.05) 0%, transparent 60%)",
-          ].join(", "),
-        }}
-      />
-
-      {/* ── 2. Canvas shooting-stars ──────────────────────────────── */}
-      <ShootingStars count={18} />
-
-      {/* ── 3. Grain texture ──────────────────────────────────────── */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-        }}
-      />
-
-      {/* ── 4. Hero content ────────────────────────────────────────── */}
+      {/* ── Hero content ────────────────────────────────────────── */}
       <motion.div
         className="relative z-10 flex flex-col items-center text-center gap-y-10 max-w-5xl"
         variants={stagger}
@@ -151,6 +124,19 @@ export default function HeroSection() {
               </span>
             </div>
           ))}
+        </motion.div>
+
+        {/* ── Scroll indicator ── */}
+        <motion.div
+          variants={fadeUp}
+          className="pt-6 flex flex-col items-center gap-3"
+        >
+          <span className="text-[10px] uppercase tracking-[0.25em] text-[#94a3b8]/40 font-medium">
+            Scroll to Discover
+          </span>
+          <div className="relative w-5 h-8 rounded-full border border-white/[0.15]">
+            <div className="absolute left-1/2 -translate-x-1/2 top-1.5 w-[3px] h-[3px] rounded-full bg-white/60 animate-[scrollDot_1.8s_ease-in-out_infinite]" />
+          </div>
         </motion.div>
       </motion.div>
     </section>
