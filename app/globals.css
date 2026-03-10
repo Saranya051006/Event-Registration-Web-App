@@ -10,6 +10,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
   --font-pixelify: var(--font-pixelify);
+  --font-bebas: var(--font-bebas);
 
   /* Obsidian & Crimson palette */
   --color-obsidian: #050505;
@@ -32,6 +33,42 @@ html {
     opacity: 1;
     transform: translateX(-50%) translateY(10px);
   }
+}
+
+@keyframes bannerShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -50% 0; }
+}
+
+@keyframes bannerPulse {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(2.2); }
+}
+
+@keyframes heroGlowWhite {
+  0%, 100% { filter: drop-shadow(0 0 14px rgba(255,255,255,0.25)); }
+  50%      { filter: drop-shadow(0 0 28px rgba(255,255,255,0.45)); }
+}
+
+@keyframes heroGlowRed {
+  0%, 100% { filter: drop-shadow(0 0 18px rgba(220,20,60,0.35)); }
+  50%      { filter: drop-shadow(0 0 36px rgba(220,20,60,0.6)); }
+}
+
+@keyframes underlineGlow {
+  0%, 100% { opacity: 0.7; box-shadow: 0 0 8px rgba(220,20,60,0.35); }
+  50%      { opacity: 1;   box-shadow: 0 0 18px rgba(220,20,60,0.6); }
+}
+
+@keyframes cornerPulse {
+  0%, 100% { border-color: rgba(220,20,60,0.3); }
+  50%      { border-color: rgba(220,20,60,0.7); }
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 body {

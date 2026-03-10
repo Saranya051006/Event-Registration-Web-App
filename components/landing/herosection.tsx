@@ -1,15 +1,20 @@
 "use client";
 
-import { motion } from "framer-motion";
-import GradientButton from "@/components/ui/GradientButton";
+import { type ReactNode } from "react";
+import { motion, type Variants } from "framer-motion";
+import DateBanner from "@/components/ui/DateBanner";
+import HeroTitle from "@/components/ui/HeroTitle";
+import HeroSubheading from "@/components/ui/HeroSubheading";
+import RegisterButton from "@/components/ui/RegisterButton";
+import StatsRow from "@/components/ui/StatsRow";
 
 // ─── Framer Motion variants ─────────────────────────────────────────
-const stagger = {
+const stagger: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.18 } },
+  show: { transition: { staggerChildren: 0.2, delayChildren: 0.1 } },
 };
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 28 },
   show: {
     opacity: 1,
@@ -18,118 +23,71 @@ const fadeUp = {
   },
 };
 
-// ─── Stat data ──────────────────────────────────────────────────────
-interface Stat {
-  value: string;
-  label: string;
+// ─── Props ──────────────────────────────────────────────────────────
+interface HeroSectionProps {
+  /** Animated background layers (particles, shooting stars, noise, etc.) */
+  children?: ReactNode;
 }
 
-const stats: Stat[] = [
-  { value: "500+", label: "Hackers" },
-  { value: "48 h", label: "Non-stop" },
-  { value: "$20K", label: "In Prizes" },
-];
-
 // ─── Hero section ───────────────────────────────────────────────────
-export default function HeroSection() {
+export default function HeroSection({ children }: HeroSectionProps) {
   return (
     <section
       className="
-        relative z-10 min-h-[85vh] w-full overflow-visible
+        relative z-10 h-screen w-full
         flex flex-col items-center justify-center
-        px-6 pt-32 pb-16 sm:pt-40 sm:pb-20 lg:pt-48 lg:pb-24
+        bg-[#0a0205]
+        overflow-hidden
       "
     >
+      {/* ── Animated background slot ── */}
+      {children && (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+          {children}
+        </div>
+      )}
+
       {/* ── Hero content ────────────────────────────────────────── */}
       <motion.div
-        className="relative z-10 flex flex-col items-center text-center gap-y-10 max-w-5xl"
+        className="
+          relative z-10 flex flex-col items-center text-center
+          w-full max-w-5xl
+          px-6 py-10 sm:py-14 lg:py-16
+          gap-y-6 sm:gap-y-8
+        "
         variants={stagger}
         initial="hidden"
         animate="show"
       >
-        {/* ── Event badge ── */}
-        <motion.span
-          variants={fadeUp}
-          className="
-            inline-block rounded-full
-            border border-white/[0.06] bg-white/[0.03]
-            px-5 py-1.5 text-[11px] font-medium uppercase
-            tracking-[0.25em] text-red-300/70 backdrop-blur-md
-          "
-        >
-          March 28 – 30, 2026 &nbsp;·&nbsp; Virtual &amp; In-Person
-        </motion.span>
-
-        {/* ── Main title ── */}
-        <motion.h1
-          variants={fadeUp}
-          className="
-            text-4xl sm:text-6xl md:text-7xl lg:text-8xl
-            font-extrabold leading-[0.92] tracking-tight
-            drop-shadow-[0_0_20px_rgba(220,38,38,0.12)]
-          "
-        >
-          <span className="bg-gradient-to-b from-[#f8fafc] to-[#f8fafc]/50 bg-clip-text text-transparent">
-            HACK
-          </span>
-          <span className="bg-gradient-to-r from-red-500 via-rose-600 to-rose-800 bg-clip-text text-transparent">
-            VERSE
-          </span>{" "}
-          <span className="bg-gradient-to-b from-[#f8fafc]/70 to-[#f8fafc]/25 bg-clip-text text-transparent">
-            2026
-          </span>
-        </motion.h1>
-
-        {/* ── Subtitle ── */}
-        <motion.p
-          variants={fadeUp}
-          className="
-            max-w-xl text-base sm:text-lg md:text-xl
-            font-light leading-relaxed text-[#94a3b8]
-          "
-        >
-          Build the future with{" "}
-          <span className="text-[#f8fafc] font-normal">developers</span> pushing
-          the boundaries of what&apos;s possible.
-        </motion.p>
-
-        {/* ── CTA ── */}
-        <motion.div variants={fadeUp} className="pt-2">
-          <GradientButton className="text-sm sm:text-base md:text-lg px-14 py-4">
-            Register Now
-          </GradientButton>
+        {/* 1 — Event badge */}
+        <motion.div variants={fadeUp}>
+          <DateBanner />
         </motion.div>
 
-        {/* ── Glassmorphism stat cards ── */}
-        <motion.div
-          variants={fadeUp}
-          className="pt-10 flex flex-wrap justify-center gap-5 sm:gap-6"
-        >
-          {stats.map(({ value, label }) => (
-            <div
-              key={label}
-              className="
-                flex flex-col items-center justify-center gap-1
-                min-w-[100px] px-6 py-4 sm:px-8 sm:py-5
-                rounded-xl
-                backdrop-blur-md bg-white/[0.04]
-                border border-white/[0.07]
-              "
-            >
-              <span className="text-xl sm:text-2xl font-semibold text-[#f8fafc]">
-                {value}
-              </span>
-              <span className="text-[11px] sm:text-xs uppercase tracking-wider text-[#94a3b8]">
-                {label}
-              </span>
-            </div>
-          ))}
+        {/* 2 — Main title */}
+        <motion.div variants={fadeUp}>
+          <HeroTitle />
+        </motion.div>
+
+        {/* 3 — Subtitle */}
+        <motion.div variants={fadeUp}>
+          <HeroSubheading />
+        </motion.div>
+
+        {/* 4 — CTA button */}
+        <motion.div variants={fadeUp}>
+          <RegisterButton />
+        </motion.div>
+
+        {/* 5 — Stats row */}
+        <motion.div variants={fadeUp} className="w-full">
+          <StatsRow />
         </motion.div>
 
         {/* ── Scroll indicator ── */}
         <motion.div
           variants={fadeUp}
-          className="pt-6 flex flex-col items-center gap-3"
+          className="flex flex-col items-center gap-3"
         >
           <span className="text-[10px] uppercase tracking-[0.25em] text-[#94a3b8]/40 font-medium">
             Scroll to Discover
